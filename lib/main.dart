@@ -24,4 +24,3 @@ class MyCalculator extends StatelessWidget {
         ));
   }
 }
-
