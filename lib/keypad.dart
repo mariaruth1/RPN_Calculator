@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 
-class Keypad extends StatefulWidget {
-  const Keypad({super.key});
 
-  @override
-  State<Keypad> createState() => _KeypadState();
-}
+class Keypad extends StatelessWidget {
+  final Function onButtonTap;
 
-class _KeypadState extends State<Keypad> {
-  List<String> buttons = [
+  Keypad({super.key, required this.onButtonTap});
+
+  final List<String> buttons = [
     '7',
     '8',
     '9',
@@ -23,11 +21,9 @@ class _KeypadState extends State<Keypad> {
     '*',
     'C',
     '0',
-    '=',
+    '.',
     '/'
   ];
-
-  String addNumberBtn = 'Add Number';
 
   double screenWidth = 0;
 
@@ -48,11 +44,21 @@ class _KeypadState extends State<Keypad> {
                 ..._createButtons(buttons),
               ]),
         ),
-        Expanded(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: _createButton(addNumberBtn),
-          ),
+        Row(
+          children: [
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: _createButton("Add Number"),
+              ),
+            ),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: _createButton("Remove Number"),
+              ),
+            ),
+          ],
         ),
       ],
     );
@@ -63,7 +69,7 @@ class _KeypadState extends State<Keypad> {
         .map((button) => SizedBox(
               child: ElevatedButton(
                 style: styleButton(button),
-                onPressed: () {},
+                onPressed: () => onButtonTap(button),
                 child: Text(
                   button,
                   style: const TextStyle(fontSize: 40),
@@ -76,10 +82,11 @@ class _KeypadState extends State<Keypad> {
   Widget _createButton(String button) {
     return ElevatedButton(
       style: styleButton(button),
-      onPressed: () {},
+      onPressed: () => onButtonTap(button),
       child: Text(
         button,
         style: const TextStyle(fontSize: 30),
+        textAlign: TextAlign.center,
       ),
     );
   }
@@ -88,16 +95,21 @@ class _KeypadState extends State<Keypad> {
     return ElevatedButton.styleFrom(
       backgroundColor: button == 'C'
           ? Colors.red[200]
-          : ('+-*/='.contains(button)
+          : ('+-*/'.contains(button)
               ? Colors.yellow[200]
-              : button == 'Add Number'
+              : button == 'Add Number' || button == 'Remove Number'
                   ? Colors.indigo[500]
                   : Colors.indigo[100]),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
-      foregroundColor:
-          button == 'Add Number' ? Colors.indigo[50] : Colors.indigo[800],
+      shape: button == 'Add Number' || button == 'Remove Number'
+          ? RoundedRectangleBorder(borderRadius: BorderRadius.circular(30))
+          : RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
+      foregroundColor: button == 'Add Number' || button == 'Remove Number'
+          ? Colors.indigo[50]
+          : Colors.indigo[800],
       elevation: 5,
-      shadowColor: button == 'Add Number' ? Colors.black : Colors.indigo[400],
+      shadowColor: button == 'Add Number' || button == 'Remove Number'
+          ? Colors.black
+          : Colors.indigo[400],
     );
   }
 }

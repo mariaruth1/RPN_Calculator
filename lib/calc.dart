@@ -5,59 +5,51 @@ abstract class Command {
 class AddCommand implements Command {
   @override
   void apply(List<num> stack) {
-    stack[0] = stack[1] + stack[0];
-    stack.removeAt(1);
+    var result = stack.removeLast() + stack.removeLast();
+    stack.add(double.parse(result.toStringAsFixed(8)));
   }
 }
 
 class SubtractCommand implements Command {
   @override
   void apply(List<num> stack) {
-    stack[0] = stack[1] - stack[0];
-    stack.removeAt(1);
+    var subtrahend = stack.removeLast();
+    var minuend = stack.removeLast();
+    stack.add(double.parse((minuend - subtrahend).toStringAsFixed(8)));
   }
 }
 
 class MultiplyCommand implements Command {
   @override
   void apply(List<num> stack) {
-    stack[0] = stack[1] * stack[0];
-    stack.removeAt(1);
+    var result = stack.removeLast() * stack.removeLast();
+    stack.add(double.parse(result.toStringAsFixed(8)));
   }
 }
 
 class DivideCommand implements Command {
   @override
   void apply(List<num> stack) {
-    if (stack.contains(0)){
-      stack[0] = 0;
-    }
-    else {
-      stack[0] = stack[1] / stack[0];
-    }
-    stack.removeAt(1);
+    var divisor = stack.removeLast();
+    if (divisor == 0) throw Exception("Division by zero error");
+    var dividend = stack.removeLast();
+    stack.add(double.parse((dividend / divisor).toStringAsFixed(8)));
   }
 }
 
-class Calculator{
-  List<num> stack = [];
+class Calculator {
+  List<num> stack;
+  Calculator({required this.stack});
 
-  Calculator();
-
-  push (num value){
-    stack.insert(0, value);
+  void push(num value) {
     stack.add(value);
   }
 
-  execute(Command command){
-    if (stack.length >= 2) {
-      command.apply(stack);
-    } else {
-      print("Error: Not enough elements in the stack for the operation.");
-    }
+  void execute(Command command) {
+    command.apply(stack);
   }
 
-  clear(){
-    stack = [];
+  void clear() {
+    stack.clear();
   }
 }
