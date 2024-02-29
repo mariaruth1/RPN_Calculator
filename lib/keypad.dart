@@ -25,11 +25,17 @@ class Keypad extends StatelessWidget {
     '/'
   ];
 
+  final List<String> textButtons = [
+    'Add',
+    'Remove',
+  ];
+
   double screenWidth = 0;
 
   @override
   Widget build(BuildContext context) {
     screenWidth = MediaQuery.of(context).size.width;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -45,18 +51,23 @@ class Keypad extends StatelessWidget {
               ]),
         ),
         Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: _createButton("Add Number"),
-              ),
+            Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: _createButton("Remove"),
+                ),
+              ],
             ),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: _createButton("Remove Number"),
-              ),
+            Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: _createButton("Add"),
+                ),
+              ],
             ),
           ],
         ),
@@ -97,17 +108,17 @@ class Keypad extends StatelessWidget {
           ? Colors.red[200]
           : ('+-*/'.contains(button)
               ? Colors.yellow[200]
-              : button == 'Add Number' || button == 'Remove Number'
+              : textButtons.contains(button)
                   ? Colors.indigo[500]
                   : Colors.indigo[100]),
-      shape: button == 'Add Number' || button == 'Remove Number'
+      shape: button == 'Add' || button == 'Remove'
           ? RoundedRectangleBorder(borderRadius: BorderRadius.circular(30))
           : RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
-      foregroundColor: button == 'Add Number' || button == 'Remove Number'
+      foregroundColor: button == 'Add' || button == 'Remove'
           ? Colors.indigo[50]
           : Colors.indigo[800],
       elevation: 5,
-      shadowColor: button == 'Add Number' || button == 'Remove Number'
+      shadowColor: button == 'Add' || button == 'Remove'
           ? Colors.black
           : Colors.indigo[400],
     );
