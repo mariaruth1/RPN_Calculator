@@ -55,7 +55,7 @@ class _MainScreenState extends State<MainScreen> {
         calculationString = '';
         tappedBtn = '0';
       });
-    } else if (button == 'Add Number') {
+    } else if (button == 'Add') {
       final parsedNumber = double.tryParse(tappedBtn);
       if (parsedNumber != null && parsedNumber != 0) {
         // Check that number is not 0
@@ -67,13 +67,13 @@ class _MainScreenState extends State<MainScreen> {
         // Handle the case where tappedBtn is not a valid double or is 0
         print("Error: '$tappedBtn' is not a valid number or is 0.");
         setState(() {
-          tappedBtn = '0'; // Reset to default or handle this appropriately
+          tappedBtn = '0';
         });
       }
-    } else if (button == 'Remove Number') {
+    } else if (button == 'Remove') {
       setState(() {
         calculator?.stack
-            .removeLast(); // Ensure you're removing from the end of the list
+            .removeLast();
       });
     } else if ('0123456789.'.contains(button)) {
       setState(() {

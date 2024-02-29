@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class Display extends StatefulWidget {
+class Display extends StatelessWidget {
   String enteredNumber;
   String stackString;
   String calculationString;
@@ -11,11 +11,6 @@ class Display extends StatefulWidget {
       required this.stackString,
       required this.calculationString});
 
-  @override
-  State<Display> createState() => _DisplayState();
-}
-
-class _DisplayState extends State<Display> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -32,9 +27,9 @@ class _DisplayState extends State<Display> {
         ),
         child:
             Column(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
-          buildScrollableTextRow(widget.stackString, 25),
-          buildScrollableTextRow(widget.calculationString, 25),
-          buildScrollableTextRow(widget.enteredNumber, 40),
+          buildScrollableTextRow(stackString, 30),
+          buildScrollableTextRow(calculationString, 20),
+          buildScrollableTextRow(enteredNumber, 40),
         ]),
       ),
     );
