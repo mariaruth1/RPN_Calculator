@@ -21,6 +21,10 @@ class _MainScreenState extends State<MainScreen> {
   String? result;
   Calculator? calculator;
 
+  double screenWidth = 0;
+  double screenHeight = 0;
+  bool isPortrait = true;
+
   @override
   void initState() {
     super.initState();
@@ -29,10 +33,14 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
+    screenWidth = MediaQuery.of(context).size.width;
+    screenHeight = MediaQuery.of(context).size.height;
+    isPortrait = screenHeight > screenWidth;
+
     return Column(
       children: [
         Flexible(
-          flex: 3,
+          flex: isPortrait ? 3 : 1,
           child: Align(
             alignment: Alignment.bottomRight,
             child: Display(
@@ -42,8 +50,8 @@ class _MainScreenState extends State<MainScreen> {
           ),
         ),
         Flexible(
-          flex: 5,
-          child: Keypad(onButtonTap: handleBtnTap),
+          flex: isPortrait ? 5 : 1,
+          child: Keypad(onButtonTap: handleBtnTap, isPortrait: isPortrait),
         ),
       ],
     );

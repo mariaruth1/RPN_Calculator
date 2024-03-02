@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 
 class Display extends StatelessWidget {
@@ -26,36 +27,38 @@ class Display extends StatelessWidget {
           ),
         ),
         child:
-            Column(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
-          buildScrollableTextRow("Stack Display",stackString, 30),
-          buildScrollableTextRow("Calculation Display", calculationString, 20),
-          buildScrollableTextRow("Entered Number Display", enteredNumber, 40),
+            Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+          _buildScrollableTextRow("Stack Display", stackString),
+          _buildScrollableTextRow("Calculation Display", calculationString),
+          _buildScrollableTextRow("Entered Number Display", enteredNumber),
         ]),
       ),
     );
   }
 
-  Widget buildScrollableTextRow(String keyString, String text, double fontSize) {
+  Widget _buildScrollableTextRow(String keyString, String text) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         Flexible(
+          flex: 1,
           child: SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             reverse: true,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                key: Key(keyString),
-                text,
-                softWrap: true,
-                style:
-                    TextStyle(fontSize: fontSize, color: Colors.indigo[900]!),
-              ),
+            child: AutoSizeText(
+              text,
+              key: Key(keyString),
+              maxLines: 1,
+              style: TextStyle(fontSize: 20, color: Colors.indigo[900]!),
+              overflow: TextOverflow.ellipsis,
+              minFontSize: 10,
             ),
           ),
         ),
       ],
     );
   }
+
 }
