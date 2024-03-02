@@ -27,15 +27,15 @@ class Display extends StatelessWidget {
         ),
         child:
             Column(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
-          buildScrollableTextRow(stackString, 30),
-          buildScrollableTextRow(calculationString, 20),
-          buildScrollableTextRow(enteredNumber, 40),
+          buildScrollableTextRow("Stack Display",stackString, 30),
+          buildScrollableTextRow("Calculation Display", calculationString, 20),
+          buildScrollableTextRow("Entered Number Display", enteredNumber, 40),
         ]),
       ),
     );
   }
 
-  Widget buildScrollableTextRow(String text, double fontSize) {
+  Widget buildScrollableTextRow(String keyString, String text, double fontSize) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
@@ -46,6 +46,7 @@ class Display extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
+                key: Key(keyString),
                 text,
                 softWrap: true,
                 style:

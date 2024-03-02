@@ -42,10 +42,12 @@ class Calculator {
   Calculator({required this.stack});
 
   void push(num value) {
+    if (value.isInfinite || value == 0) throw Exception("Cannot add 0 to stack");
     stack.add(value);
   }
 
   void execute(Command command) {
+    if (stack.length < 2) throw Exception("Not enough operands on the stack to perform operation");
     command.apply(stack);
   }
 

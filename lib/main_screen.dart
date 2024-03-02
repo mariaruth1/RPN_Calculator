@@ -1,10 +1,11 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'calc.dart';
 import 'keypad.dart';
 import 'display.dart';
 
 class MainScreen extends StatefulWidget {
-  const MainScreen({Key? key}) : super(key: key);
+  const MainScreen({super.key});
 
   @override
   State<MainScreen> createState() => _MainScreenState();
@@ -58,14 +59,15 @@ class _MainScreenState extends State<MainScreen> {
     } else if (button == 'Add') {
       final parsedNumber = double.tryParse(tappedBtn);
       if (parsedNumber != null && parsedNumber != 0) {
-        // Check that number is not 0
         setState(() {
           calculator?.push(parsedNumber);
           tappedBtn = '0';
         });
       } else {
         // Handle the case where tappedBtn is not a valid double or is 0
-        print("Error: '$tappedBtn' is not a valid number or is 0.");
+        if (kDebugMode) {
+          print("Error: '$tappedBtn' is not a valid number or is 0.");
+        }
         setState(() {
           tappedBtn = '0';
         });
