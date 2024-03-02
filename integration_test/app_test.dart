@@ -85,11 +85,6 @@ void main() {
     expect(enteredText.data, equals('0'));
   });
 
-  testWidgets('', (WidgetTester tester) async {
-    await setupWidget(tester);
-
-  });
-
   /*
   testWidgets('', (WidgetTester tester) async {
     await setupWidget(tester);
