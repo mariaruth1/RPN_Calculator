@@ -4,8 +4,13 @@ import 'package:flutter/material.dart';
 class Keypad extends StatelessWidget {
   final Function onButtonTap;
   final bool isPortrait;
+  double fontSize;
 
-  Keypad({super.key, required this.onButtonTap, required this.isPortrait});
+  Keypad(
+      {super.key,
+      required this.onButtonTap,
+      required this.isPortrait,
+      required this.fontSize});
 
   final List<String> landscapeNumbers = [
     '.',
@@ -52,7 +57,6 @@ class Keypad extends StatelessWidget {
     'Remove',
   ];
 
-
   @override
   Widget build(BuildContext context) {
     return isPortrait ? _createPortraitLayout() : _createLandscapeLayout();
@@ -60,16 +64,24 @@ class Keypad extends StatelessWidget {
 
   List<Widget> _createButtons(List<String> buttons) {
     return buttons
-        .map((button) => ElevatedButton(
-              style: _styleButton(button),
-              onPressed: () => onButtonTap(button),
-              child: AutoSizeText(
-                button,
-                maxLines: 1,
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 40, color: addRemove.contains(button) ? Colors.indigo[50] : Colors.indigo[800]),
-                overflow: TextOverflow.ellipsis,
-                minFontSize: 20,
+        .map((button) => Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ElevatedButton(
+                  style: _styleButton(button),
+                  onPressed: () => onButtonTap(button),
+                  child: Text(
+                    button,
+                    maxLines: 1,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        fontSize: fontSize,
+                        color: addRemove.contains(button)
+                            ? Colors.indigo[50]
+                            : Colors.indigo[800]),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
               ),
             ))
         .toList();
@@ -86,14 +98,12 @@ class Keypad extends StatelessWidget {
                   : Colors.indigo[100]),
       shape: addRemove.contains(button)
           ? RoundedRectangleBorder(borderRadius: BorderRadius.circular(30))
-          : RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
-      foregroundColor: addRemove.contains(button)
-          ? Colors.indigo[50]
-          : Colors.indigo[800],
-      elevation: 5,
-      shadowColor: addRemove.contains(button)
-          ? Colors.black
-          : Colors.indigo[400],
+          : RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
+      foregroundColor:
+          addRemove.contains(button) ? Colors.indigo[50] : Colors.indigo[800],
+      elevation: 7,
+      shadowColor:
+          addRemove.contains(button) ? Colors.black : Colors.indigo[400],
     );
   }
 
@@ -113,18 +123,15 @@ class Keypad extends StatelessWidget {
 
   Flexible _createButtonRow(List<String> buttons) {
     return Flexible(
-        flex: 1,
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              ..._createButtons(buttons),
-            ],
-          ),
-        ),
-      );
+      flex: 1,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          ..._createButtons(buttons),
+        ],
+      ),
+    );
   }
 
   _createLandscapeLayout() {

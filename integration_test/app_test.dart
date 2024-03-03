@@ -85,24 +85,4 @@ void main() {
     expect(enteredText.data, equals('0'));
   });
 
-  /*
-  testWidgets('', (WidgetTester tester) async {
-    await setupWidget(tester);
-
-  });
-  */
-
-
-
-  // Test Button Responsiveness
-
-  // Test Landscape Mode:
-  //  Rotate the device to landscape mode and verify that the app layout adjusts appropriately
-  //  and remains fully functional.
-
-  // Test Various Screen Sizes:
-  //  Run tests on devices with different screen sizes to ensure the UI scales well and remains usable.
-
-
-
 }

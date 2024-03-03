@@ -9,9 +9,14 @@ void main() {
 class MyCalculator extends StatelessWidget {
   const MyCalculator({super.key});
 
+
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    var screenWidth = MediaQuery.of(context).size.width;
+    var screenHeight = MediaQuery.of(context).size.height;
+    var isPortrait = screenHeight > screenWidth;
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(

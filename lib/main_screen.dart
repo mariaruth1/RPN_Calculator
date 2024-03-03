@@ -24,6 +24,7 @@ class _MainScreenState extends State<MainScreen> {
   double screenWidth = 0;
   double screenHeight = 0;
   bool isPortrait = true;
+  double fontSize = 1;
 
   @override
   void initState() {
@@ -37,6 +38,8 @@ class _MainScreenState extends State<MainScreen> {
     screenHeight = MediaQuery.of(context).size.height;
     isPortrait = screenHeight > screenWidth;
 
+    fontSize = isPortrait ? screenWidth / 15 : screenHeight / 20;
+
     return Column(
       children: [
         Flexible(
@@ -46,13 +49,18 @@ class _MainScreenState extends State<MainScreen> {
             child: Display(
                 enteredNumber: tappedBtn,
                 stackString: getStackString(),
-                calculationString: calculationString),
+                calculationString: calculationString,
+                fontSize: fontSize),
           ),
         ),
         Flexible(
           flex: isPortrait ? 5 : 1,
-          child: Keypad(onButtonTap: handleBtnTap, isPortrait: isPortrait),
-        ),
+          child: Keypad(
+            onButtonTap: handleBtnTap,
+            isPortrait: isPortrait,
+            fontSize: fontSize,
+          ),
+        )
       ],
     );
   }
@@ -82,8 +90,7 @@ class _MainScreenState extends State<MainScreen> {
       }
     } else if (button == 'Remove') {
       setState(() {
-        calculator?.stack
-            .removeLast();
+        calculator?.stack.removeLast();
       });
     } else if ('0123456789.'.contains(button)) {
       setState(() {

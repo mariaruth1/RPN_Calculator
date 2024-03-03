@@ -5,12 +5,14 @@ class Display extends StatelessWidget {
   String enteredNumber;
   String stackString;
   String calculationString;
+  double fontSize;
 
   Display(
       {super.key,
       required this.enteredNumber,
       required this.stackString,
-      required this.calculationString});
+      required this.calculationString,
+      required this.fontSize});
 
   @override
   Widget build(BuildContext context) {
@@ -27,9 +29,7 @@ class Display extends StatelessWidget {
           ),
         ),
         child:
-            Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
+            Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
           _buildScrollableTextRow("Stack Display", stackString),
           _buildScrollableTextRow("Calculation Display", calculationString),
           _buildScrollableTextRow("Entered Number Display", enteredNumber),
@@ -47,18 +47,16 @@ class Display extends StatelessWidget {
           child: SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             reverse: true,
-            child: AutoSizeText(
+            child: Text(
               text,
               key: Key(keyString),
               maxLines: 1,
-              style: TextStyle(fontSize: 20, color: Colors.indigo[900]!),
+              style: TextStyle(fontSize: fontSize, color: Colors.indigo[900]!),
               overflow: TextOverflow.ellipsis,
-              minFontSize: 10,
             ),
           ),
         ),
       ],
     );
   }
-
 }
